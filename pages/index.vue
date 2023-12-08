@@ -14,7 +14,7 @@
           Admin Login
         </h3>
 
-        <form class="p-6">
+        <form class="p-6" @submit.prevent="login">
           <div class="flex flex-col mb-4">
             <label for="password" class="block mb-2 text-sm font-medium">
               Email Address
@@ -29,7 +29,6 @@
                 id="email"
                 v-model="payload.email"
                 type="email"
-                class="bg-transparent focus:bg-transparent block flex-1 min-w-0 w-full rounded-tr-lg rounded-br-lg text-sm text-primary-input p-[1.125rem] pl-1 outline-0 border-0"
                 placeholder="email"
               />
             </div>
@@ -49,7 +48,6 @@
                 id="password"
                 v-model="payload.password"
                 :type="showPassword ? 'text' : 'password'"
-                class="bg-transparent focus:bg-transparent block flex-1 min-w-0 w-full rounded-tr-lg rounded-br-lg text-sm text-primary-input p-[1.125rem] pl-1 outline-0 border-0"
                 placeholder="password"
                 autocomplete="current-password"
               />
@@ -65,11 +63,11 @@
 
           <div class="block w-full mt-8">
             <Button
+              type="submit"
               text="Login"
               class="w-full"
               :disabled="loading"
               :loading="loading"
-              @click="login"
             />
           </div>
         </form>
@@ -79,47 +77,49 @@
 </template>
 
 <script setup lang="ts">
+import { LoginCredentials } from "~/composables/useApi";
+import { useAuthStore } from "~/store/authentication";
+
 definePageMeta({
   layout: "auth",
 });
 
-import { useToast } from "~/composables/useToast";
-import { LoginCredentials } from "~/composables/useApi";
-import { useAuthStore } from "~/store/authentication";
-
-const router = useRouter();
-
 const showPassword: Ref<boolean> = ref(false);
 const loading: Ref<boolean> = ref(false);
-
 const payload = ref<LoginCredentials>({
   email: "",
   password: "",
 });
 
-const { setAuthUser, setAuthToken, logout } = useAuthStore();
+const router = useRouter();
+const { setAuthUser, setAuthToken } = useAuthStore();
 
 const login = async () => {
-  loading.value = true;
-  const { login: authLogin } = useApi();
-  const toast = useToast();
+  try {
+    loading.value = true;
+    const { login: authLogin } = useApi();
 
-  const { data, error } = await useAsyncData(() => authLogin(payload.value));
+    const { data } = await useAsyncData(() => authLogin(payload.value));
 
-  if (data) {
-    const { token, user } = data.value.data;
-    if (!token || !user) return;
-    setAuthToken(token);
-    setAuthUser(user);
-    router.push("/ngos");
-  } else if (error) toast.error("Something went wrong");
-
-  loading.value = false;
+    if (data) {
+      const { token, user } = data?.value?.data;
+      setAuthToken(token);
+      setAuthUser(user);
+      router.push("/ngos");
+    }
+  } catch (__err) {
+  } finally {
+    loading.value = false;
+  }
 };
 </script>
 
 <style lang="scss" scoped>
 .box-shadow {
   box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.04);
+}
+
+input {
+  @apply bg-transparent focus:bg-transparent block flex-1 min-w-0 w-full rounded-tr-lg rounded-br-lg text-primary-black p-[1.125rem] pl-1 outline-0 border-0;
 }
 </style>

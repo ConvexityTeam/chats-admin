@@ -1,7 +1,7 @@
 <template>
   <div
     class="fixed top-0 left-0 !w-screen !h-screen overflow-auto z-50 bg-primary-blue bg-opacity-30 py-6"
-  @click="closeModal"
+    @click="closeModal"
   >
     <section
       class="relative modal h-auto mx-auto bg-white p-6 rounded-lg box-shadow"
@@ -27,7 +27,7 @@
   </div>
 </template>
 
-<script setup lang='ts'> 
+<script setup lang="ts">
 const props = defineProps({
   id: {
     type: String,
@@ -53,37 +53,45 @@ const props = defineProps({
   },
   hasHeader: {
     type: Boolean,
-    default: true
-  }
-})
+    default: true,
+  },
+});
 
-const emit = defineEmits(['close'])
+const emit = defineEmits(["close"]);
 const modalSizes = computed(() => {
-  if (props.size == 'xs') return "18.75rem"
-  if (props.size == 'sm') return "29.25rem"
-  if (props.size == 'md') return "31.25rem"
-  if (props.size == 'lg') return "44rem"
-  if (props.size == 'xl') return "71.25rem"
-  else props.size
-})
-
+  switch (props.size) {
+    case "xs":
+      return "18.75rem";
+    case "sm":
+      return "29.25rem";
+    case "lg":
+      return "44rem";
+    case "xl":
+      return "71.25rem";
+    default:
+      return "31.25rem";
+  }
+});
 
 window.addEventListener("keyup", (e) => {
-  if (e.key == 'Escape') return close()
-}); 
- 
- const closeModal = () => {
-  window.addEventListener("click", (event) => {
-      if (!event.target.closest(".modal")) { close() }
+  if (e.key === "Escape") return close();
+});
+
+const closeModal = () => {
+  window.addEventListener(
+    "click",
+    (event) => {
+      if (!event.target.closest(".modal")) {
+        close();
+      }
     },
     false
-  )
- }
+  );
+};
 const close = () => {
-  emit("close", props.id)
-} 
+  emit("close", props.id);
+};
 </script>
-
 
 <style lang="scss" scoped>
 .box-shadow {

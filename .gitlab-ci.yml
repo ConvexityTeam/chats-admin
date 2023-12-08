@@ -13,8 +13,8 @@ include:
 build:
   stage: build
   script:
-    - npm install
-    - npm run generate
+    - yarn install
+    - yarn generate
   artifacts:
     paths:
       - .output

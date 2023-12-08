@@ -15,20 +15,19 @@
                 ? 'bg-primary-green text-white'
                 : 'bg-transparent text-[#4F627D]'
             "
-          > 
-            <span  >
+          >
+            <span>
               <IconSideBar
                 :title="sideNav.name.toLowerCase()"
-                :isActive="sideNav.route == currentActiveRoute"
+                :is-active="sideNav.route == currentActiveRoute"
               />
             </span>
 
-            <span class="text-[1.125rem]">               {{ sideNav.name }}
-            </span>
+            <span class="text-[1.125rem]"> {{ sideNav.name }} </span>
           </nuxt-link>
         </div>
       </div>
- 
+
       <div class="justify-self-end my-4 flex flex-col">
         <div
           class="flex space-x-3.5 flex-end cursor-pointer items-center text-primary-red justify-start rounded-xl px-3.5 py-3 font-medium"
@@ -46,21 +45,20 @@
 </template>
 
 <script setup lang="ts">
-const route = useRoute()
-import { useAuthStore } from '~/store/authentication' 
-const router = useRouter() 
-const  { logout }  = useAuthStore() 
+import { useAuthStore } from "~/store/authentication";
+const route = useRoute();
+const router = useRouter();
+const { logout } = useAuthStore();
 
-const currentActiveRoute = computed(() => route.fullPath)
+const currentActiveRoute = computed(() => route.fullPath);
 const sideNavs = ref([
-  {    name: "NGOs", route: "/ngos", isHovered: false,  },
-  {    name: "Donors",     route: "/donors",    isHovered: false,  },
-  {    name: "Vendors",     route: "/vendors",    isHovered: false,  },
-  {    name: "Beneficiaries",     route: "/beneficiaries",    isHovered: false,  },
-  {    name: "Campaigns",     route: "/campaigns",    isHovered: false,  },
-  {    name: "Settings",     route: "/settings",    isHovered: false,  },
+  { name: "NGOs", route: "/ngos", isHovered: false },
+  { name: "Donors", route: "/donors", isHovered: false },
+  { name: "Vendors", route: "/vendors", isHovered: false },
+  { name: "Beneficiaries", route: "/beneficiaries", isHovered: false },
+  { name: "Campaigns", route: "/campaigns", isHovered: false },
+  { name: "Settings", route: "/settings", isHovered: false },
 ]);
- 
 </script>
 
 <style lang="scss" scoped>
@@ -71,7 +69,7 @@ const sideNavs = ref([
   }
 }
 .Logout {
-  &.nuxt-link-active { 
+  &.nuxt-link-active {
     @apply bg-[#E42C66];
   }
 }

@@ -1,22 +1,26 @@
 body {
-    font-family: "Gilroy";
-    background-color: #fff;
-    scroll-behavior: smooth;
-    color: #25396f;
-    &::-webkit-scrollbar {
-        width: 14px;
+  font-family: "Gilroy";
+  background-color: #fff;
+  scroll-behavior: smooth;
+  color: #25396f;
+  &::-webkit-scrollbar {
+    width: 14px;
+  }
+  &::-webkit-scrollbar-track {
+    background-color: #fcfcfc;
+    overflow: hidden;
+    border-radius: 999px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: #e2e2e2;
+    border-radius: 999px;
+    border: 1px solid #e6ffff;
+    &:hover {
+      background: #17ce89;
     }
-    &::-webkit-scrollbar-track {
-        background-color: #fcfcfc;
-        overflow: hidden;
-        border-radius: 999px;
-    }
-    &::-webkit-scrollbar-thumb {
-        background: #e2e2e2;
-        border-radius: 999px;
-        border: 1px solid #e6ffff;
-        &:hover {
-            background: #17ce89;
-        }
-    }
+  }
+}
+
+.el-loading-spinner .path {
+  stroke: #17ce89 !important;
 }

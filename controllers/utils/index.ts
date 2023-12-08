@@ -13,7 +13,7 @@ export const formatNumbers = (number: number) => {
 };
 
 export const formatMoney = (number: number) => {
-  return `$ ${(Math.round(number * 100) / 100).toLocaleString()}`;
+  return `₦ ${(Math.round(number * 100) / 100).toLocaleString()}`;
 };
 
 export const formatDate = (dateString: string) => {
@@ -35,7 +35,7 @@ export const formatDate = (dateString: string) => {
   ];
   const year = date_string.getFullYear();
   const month = months[date_string.getMonth()];
-  let date: any = date_string.getDate();
+  const date: any = date_string.getDate();
 
   const formattedDate = `${date} ${month}, ${year}`;
 
@@ -99,4 +99,5 @@ export const formatDate = (dateString: string) => {
 //   return { formattedDate, formattedTime, formattedFullDate };
 // };
 
-export const snakeToCamelCase = (s) =>  s.toLowerCase().replace(/(_\w)/g, (w) => w.toUpperCase().substr(1))
+export const snakeToCamelCase = (s) =>
+  s.toLowerCase().replace(/(_\w)/g, (w) => w.toUpperCase().substr(1));
