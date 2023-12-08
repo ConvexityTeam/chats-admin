@@ -1,5 +1,6 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
+  ssr: false,
   css: [
     "sweetalert2/src/sweetalert2.scss",
     "~/assets/styles/tailwind.scss",
@@ -14,7 +15,11 @@ export default defineNuxtConfig({
     },
   },
 
-  modules: ["@pinia/nuxt", "@pinia-plugin-persistedstate/nuxt"],
+  modules: [
+    "@pinia/nuxt",
+    "@pinia-plugin-persistedstate/nuxt",
+    ["@element-plus/nuxt"],
+  ],
 
   pinia: {
     autoImports: [
@@ -24,10 +29,12 @@ export default defineNuxtConfig({
     ],
   },
 
-  runtimeConfig: {
-    // Keys within public, will be also exposed to the client-side
-    public: {
-      BASE_URL: process.env.BASE_URL,
+  // failsafe mechanism for crawler for SSG, might be modified
+  // ref: https://stackoverflow.com/questions/76752732/error-while-deploying-nuxt-3-in-pre-rendered-mode
+  nitro: {
+    prerender: {
+      crawlLinks: true,
+      failOnError: false,
     },
   },
 

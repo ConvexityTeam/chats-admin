@@ -15,3 +15,4 @@ ENV PORT 3088
 EXPOSE ${PORT}
 
 ENTRYPOINT ["node", ".output/server/index.mjs"]
+

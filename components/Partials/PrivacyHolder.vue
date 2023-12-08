@@ -1,7 +1,12 @@
 <template>
   <div class="flex justify-between items-center px-3 mb-8">
     <div class="flex justify-between items-center space-x-4">
-      <span v-if="hasSearchField"> <Search /> </span>
+      <span v-if="hasSearchField">
+        <Search
+          :placeholder="searchPlaceholder"
+          @input="(value: string) => $emit('input', value)"
+        />
+      </span>
 
       <span v-if="hasFilterOption"> <Filter /> </span>
     </div>
@@ -9,29 +14,29 @@
     <div class="flex justify-between items-center space-x-4">
       <div v-if="hasExportButton">
         <Button
-          :hasBorder="true"
-          :hasIcon="true"
+          :has-border="true"
+          :has-icon="true"
           text="Export"
-          iconName="export"
+          icon-name="export"
           class="!py-3.5"
-          @click="clickExport"
+          @click="$emit('export')"
         />
       </div>
 
       <div v-show="hasCreateButton">
         <Button
           :text="createBtnText"
-          :hasIcon="true"
-          iconName="add"
+          :has-icon="true"
+          icon-name="add"
           class="!p-4"
-          @click="clickCreate"
+          @click="$emit('create')"
         />
       </div>
     </div>
   </div>
 </template>
 
-<script   setup lang="ts"> 
+<script setup lang="ts">
 const props = defineProps({
   hasSearchField: {
     type: Boolean,
@@ -47,26 +52,22 @@ const props = defineProps({
   },
   hasFilterOption: {
     type: Boolean,
-    default: true,
+    default: false,
   },
   createBtnText: {
     type: String,
-    default: 'Create',
+    default: "Create",
   },
   searchPlaceholder: {
     type: String,
-    default: 'Search NGOs...',
+    default: "",
   },
   filterPlaceholder: {
     type: String,
-    default: 'Filter',
+    default: "Filter",
   },
-},)
+});
 
 // emits
-const emit = defineEmits(['export', 'create'])
-const clickExport = () => { emit('export') }
-const clickCreate = () => { emit('create') }
+defineEmits(["export", "create", "input"]);
 </script>
-
-<style lang="scss" scoped></style>

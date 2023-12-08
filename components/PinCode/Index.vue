@@ -1,63 +1,63 @@
 <template>
-  <div class="flex space-x-1.5 justify-around"> 
+  <div class="flex space-x-1.5 justify-around">
     <!-- value1 -->
     <input
+      v-model="value1"
       type="number"
       class=""
       :class="value1 && `outline-primary-green`"
       placeholder="-"
-      v-model="value1"
     />
 
     <!-- value2 -->
     <input
+      v-model="value2"
       type="number"
       :class="value2 && `outline-primary-green`"
       placeholder="-"
-      v-model="value2"
       :disabled="!value1"
     />
 
     <!-- value3 -->
     <input
+      v-model="value3"
       type="number"
       :class="value3 && `outline-primary-green`"
       placeholder="-"
-      v-model="value3"
       :disabled="!value2"
     />
 
     <!-- value4 -->
     <input
+      v-model="value4"
       type="number"
       :class="value4 && `outline-primary-green`"
       placeholder="-"
-      v-model="value4"
       :disabled="!value3"
     />
 
     <!-- value5 -->
     <input
+      v-model="value5"
       type="number"
       :class="value5 && `outline-primary-green`"
       placeholder="-"
-      v-model="value5"
       :disabled="!value4"
     />
 
     <!-- value6 -->
     <input
+      v-model="value6"
       type="number"
       :class="value6 && `outline-primary-green`"
       placeholder="-"
-      v-model="value6"
-      @input="getInput"
       :disabled="!value5"
+      @input="getInput"
     />
   </div>
 </template>
- 
-<script setup lang="ts" >
+
+<script setup lang="ts">
 const props = defineProps({
   noOfFields: {
     type: Number,
@@ -67,31 +67,38 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
-},)
+});
 
-const value1 = ref(null)
-const value2 = ref(null)
-const value3 = ref(null)
-const value4 = ref(null)
-const value5 = ref(null)
-const value6 = ref(null)
+const value1 = ref(null);
+const value2 = ref(null);
+const value3 = ref(null);
+const value4 = ref(null);
+const value5 = ref(null);
+const value6 = ref(null);
 
 const inputValue = computed(() => {
-  if (!value1.value || !value2.value || !value3.value || !value4.value || !value5.value || !value6.value)
-    return null
+  if (
+    !value1.value ||
+    !value2.value ||
+    !value3.value ||
+    !value4.value ||
+    !value5.value ||
+    !value6.value
+  )
+    return null;
 
-  const valueTotal = `${value1.value}${value2.value}${value3.value}${value4.value}${value5.value}${value6.value}`
-  return valueTotal
-})
+  const valueTotal = `${value1.value}${value2.value}${value3.value}${value4.value}${value5.value}${value6.value}`;
+  return valueTotal;
+});
 
 // EMITS
-const emit = defineEmits(['getInput'])
+const emit = defineEmits(["getInput"]);
 const getInput = () => {
-  emit('getInput', inputValue.value)
-} 
+  emit("getInput", inputValue.value);
+};
 </script>
 
-<style  scoped>
+<style scoped>
 /* Chrome, Safari, Edge, Opera */
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
